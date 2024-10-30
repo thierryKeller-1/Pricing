@@ -1,0 +1,82 @@
+[  
+    {  
+        "dest_id": 5620,  
+        "destination": "Beauffortain",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=5620&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 3545,  
+        "destination": "Grand Massif",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=3545&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 5602,  
+        "destination": "Oisans",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=5602&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 3785,  
+        "destination": "Vercors",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=3785&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 3546,  
+        "destination": "Portes du Soleil",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=3546&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 3763,  
+        "destination": "Lac d'Annecy",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=3763&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 5647,  
+        "destination": "Pays du Mont Blanc",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=5647&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 3795,  
+        "destination": "Maurienne",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=3795&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 5642,  
+        "destination": "Bauges",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=5642&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 3787,  
+        "destination": "Tarentaise",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=3787&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 2503,  
+        "destination": "Hautes Alpes",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=2503&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 2526,  
+        "destination": "Haute Garonne",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=2526&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 2507,  
+        "destination": "Ariège",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=2507&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 2558,  
+        "destination": "Pyrenees Orientales",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=2558&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 2557,  
+        "destination": "Hautes Pyrénées",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=2557&etendre_min=30&trier_par=zerank"  
+    },  
+    {  
+        "dest_id": 2556,  
+        "destination": "Pyrenees Atlantiques",  
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=2556&etendre_min=30&trier_par=zerank"  
+    } 
+]  

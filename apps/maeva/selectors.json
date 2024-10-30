@@ -1,0 +1,66 @@
+{
+    "initializer": {
+        "required_fields": [
+            "container",
+            "toasts",
+            "toast",
+            "result_count"
+        ],
+        "agreement": [
+            {
+                "by_tag_only": false,
+                "tag": "button",
+                "attr_key": "id",
+                "attr_value": "didomi-notice-agree-button"
+            }
+        ],
+        "container": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "id",
+                "attr_value": "sl-toaster-container"
+            }
+        ],
+        "toasts": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "class",
+                "attr_value": "toaster"
+            }
+        ],
+        "toast": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "class",
+                "attr_value": "toaster-residence-libelle",
+                "target": "child",
+                "child":{
+                    "by_tag_only":true,
+                    "tag": "a",
+                    "target": "attribute",
+                    "value_attr": "href"
+                }
+            }
+        ],
+        "result_count": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "id",
+                "attr_value": "sl-resultats-tri",
+                "target": "text"
+            }
+        ]
+    },
+    "scraper": {
+        "container": {
+            "by_tag_only": false,
+            "tag": "div",
+            "attr_key": "class",
+            "attr_value": "toaster"
+        }
+    }
+}

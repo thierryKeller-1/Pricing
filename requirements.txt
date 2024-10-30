@@ -1,0 +1,12 @@
+bota 
+botasaurus 
+botasaurus-api 
+botasaurus-requests 
+botasaurus-driver 
+bota 
+botasaurus-proxy-authentication 
+botasaurus-server
+pandas
+bs4
+selenium
+webdriver_manager
