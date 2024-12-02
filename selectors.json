@@ -1,0 +1,91 @@
+{
+    "pop-ups": [
+        {
+            "by_tag_only": false,
+            "tag": "button",
+            "attr_key": "id",
+            "attr_value": "didomi-notice-agree-button"
+        }
+    ],
+    "initializer": {
+        "required_fields": [
+            "container",
+            "toasts",
+            "toast",
+            "result_count"
+        ],
+        "container": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "id",
+                "attr_value": "sl-toaster-container"
+            }
+        ],
+        "toasts": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "class",
+                "attr_value": "toaster"
+            }
+        ],
+        "toast": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "class",
+                "attr_value": "tuile_title t-5 text-bold",
+                "target": "child",
+                "child": {
+                    "by_tag_only": false,
+                    "tag": "a",
+                    "attr_key": "class",
+                    "attr_value": "toaster-seo-link toaster-annuaire-link",
+                    "target": "attribute",
+                    "value_attr": "href"
+                }
+            },
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "class",
+                "attr_value": "toaster-residence-libelle",
+                "target": "child",
+                "child": {
+                    "by_tag_only": false,
+                    "tag": "a",
+                    "attr_key": "class",
+                    "attr_value": "toaster-seo-link toaster-annuaire-link",
+                    "target": "attribute",
+                    "value_attr": "href"
+                }
+            }
+        ],
+        "result_count": [
+            {
+                "by_tag_only": false,
+                "tag": "div",
+                "attr_key": "id",
+                "attr_value": "sl-resultats-tri",
+                "target": "text"
+            }
+        ]
+    },
+    "scraper": {
+        "pop-ups": [
+            {
+                "by_tag_only": false,
+                "tag": "button",
+                "attr_key": "id",
+                "attr_value": "didomi-notice-agree-button"
+            }
+        ],
+        "container": {
+            "by_tag_only": false,
+            "tag": "div",
+            "attr_key": "class",
+            "attr_value": "toaster"
+        }
+    }
+}
