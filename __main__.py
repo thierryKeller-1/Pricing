@@ -1,6 +1,10 @@
 import argparse
 from datetime import datetime, timedelta
-from apps.booking import booking_initializer, booking_starter
+from apps.booking.initializer import booking_initializer_task
+from apps.booking.command import booking_initializer, booking_starter
+from apps.maeva.command import maeva_initializer, maeva_starter
+from apps.maeva.scraper import *
+
 
 
 def main_arguments() -> object:
@@ -33,7 +37,8 @@ match args.platform:
         if args.action == 'clean':
             pass
     case 'maeva':
-        pass
+        if args.action == 'init':
+            maeva_initializer(args.weekscrap)
     case 'campings':
         pass
     case 'edomizil':

@@ -1,9 +1,11 @@
 import logging
+import os
+import smtplib
 from colorama import Fore
 from core import constants as ct
 
 
-logging.basicConfig(level=logging.INFO, format=Fore.YELLOW + '%(asctime)s - %(levelname)s - %(message)s')
+# logging.basicConfig(level=logging.INFO, format=Fore.YELLOW + '%(asctime)s - %(levelname)s - %(message)s')
 
 def show_message(msg_type:str, message:str, hide_in_prod:bool=False) -> None:
     if hide_in_prod and not ct.DEBUG:
@@ -24,6 +26,11 @@ def get_input(message:str) -> object:
     response = input(Fore.GREEN + f"$ {message} ==> ") 
     return response
 
-
 def report_bug(data:object) -> None:
+    pass
+
+def get_log(plateform:str, week_date:str, file_name:str) -> object:
+    pass
+
+def report_status():
     pass

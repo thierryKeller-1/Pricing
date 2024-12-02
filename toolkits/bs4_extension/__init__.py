@@ -1,5 +1,5 @@
 from core import constants as ct
-from loggers import show_message
+from toolkits.loggers import show_message
 
 
 def check_element_by_locator(element:object, locator:dict) -> bool:
@@ -82,10 +82,7 @@ def extract_element_by_locator(element:object, locator:dict) -> object | None:
         except:
             pass
         return text
-    if locator['by_tag_only']:
-        element = element.find(locator['tag'])
-    else:
-        element = element.find(locator['tag'], {locator['attr_key']:locator['attr_value']})
+    element = get_element_by_locator(element, locator)
     if element:
         match locator['target']:
             case "text":
