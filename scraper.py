@@ -66,6 +66,8 @@ class MaevaPageExtractor(object):
             end_date = (datetime.strptime(start_date, "%d/%m/%Y") + timedelta(days=6)).strftime("%d/%m/%Y")
             return {"date_debut": start_date, "date_fin": end_date}
 
+
+
     def clean_station(self, station:str) -> dict | None:
         return {"nom_station": station}
     
@@ -173,10 +175,18 @@ def open_driver(driver: Driver, url:str) -> Driver:
                     driver.get(url)
                     return driver
 
+
+def get_selectors() -> dict:
+    with open("/home/keller/Documents/Jobdev/Jobdev/programs/dev/pricing/pricing/apps/maeva/selectors.json", 'r') as openfile:
+        selectors = json.load(openfile)
+        return selectors['scraper']
+    
+
 def get_page_type(url:str) -> str:
     if '/pages/' in url:
         return 'pages'
     return 'others'
+
 
 def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
     new_selectors = {}
@@ -234,7 +244,8 @@ def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
     except:
         open_driver_instance = open_driver(driver, data['url'])
     page_type = get_page_type(data['url'])
-    selectors:dict = fm.get_selectors('maeva')
+    # selectors:dict = fm.get_selectors('maeva')
+    selectors:dict = get_selectors()
     try:
         accept_btn = open_driver_instance.select(bs4_ex.create_selector(fm.get_selectors('maeva', 'pop-ups')[0]))
         accept_btn.click()
@@ -254,3 +265,30 @@ def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
         )
     m.extract()
     m.normalize_data()
+
+
+
+if __name__ == "__main__":
+    data = fm.get_json_file_content("./data.json")
+    # maeva_scraper_task(
+    #     driver=Driver,
+    #     config={"date_price":"30/12/2024"},
+    #     data = [    
+    #         {
+    #         "url": "https://www.maeva.com/fr-fr/pages/fiche.php?id=773894",
+    #         }
+    #     ]
+    # )
+    maeva_scraper_task(
+        driver=Driver,
+        data=[ {
+            "url": "https://www.maeva.com/fr-fr/quartier-creve-coeur-maeva-home_57453.html?date_debut=2025-01-18&date_fin=2025-01-24&residence_cle=57453&formule=0&nbPax=0&ordreSeo=ranking",
+            "nb_page": 1
+        },
+                    {
+            "url": "https://www.maeva.com/fr-fr/pages/fiche.php?id=773894",
+            }],
+        metadata={'date_price':'30/12/2024'}
+    )
+
+

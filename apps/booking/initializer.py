@@ -1,8 +1,9 @@
-from toolkits.loggers import show_message
-from toolkits import fm as fm
-from core import constants as ct
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs
+
+import toolkits as fm
+from toolkits.loggers import show_message
+from core import constants as ct
 
 
 
@@ -70,7 +71,7 @@ class BookingInitializer(object):
         show_message('info', f"run command -> python3 pricing -p booking -a start -w {self.config['week_scrap']} -n {self.config['name']}")
 
     def initialize(self) -> None:
-        """initialise scraps"""
+        """initialize scraps"""
         show_message('info', 'Initializing ...')
         self.load_stations()
         self.generate_url()

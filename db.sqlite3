@@ -1,0 +1,10 @@
+
+
+python -p campings -s 1
+
+10000
+
+start_from: 5000
+end_at: 8000
+
+
