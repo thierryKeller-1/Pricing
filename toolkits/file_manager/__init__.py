@@ -10,6 +10,7 @@ from pathlib import Path
 def is_file_exist(file_path:str) -> bool:
     return Path(file_path).exists()
 
+
 def create_folder_if_not_exist(folder_path:str) -> None:
     """create folder if it doesn't exist yet
     Args:
@@ -38,6 +39,7 @@ def get_json_file_content(json_file_path:str, key:str=None) -> object:
             return file_content
     show_message('error', 'file does not found')
 
+
 def create_or_update_json_file(file_path:str, file_content:object=[]) -> None:
     """create or update file content
     Args:
@@ -54,7 +56,7 @@ def create_or_update_json_file(file_path:str, file_content:object=[]) -> None:
             openfile.write(json.dumps(file_content))
     show_message('info', "file data updated")
 
-def save_data_to_csv(file_path:str, data:list, field_names:str) -> None:
+def save_data_to_csv(file_path:str, field_names:str, data:list=[]) -> None:
     """save data to csv file
     Args:
         file_path (str): csv file path
@@ -123,4 +125,15 @@ def get_path(plateform:str, folder_name:str) -> str | None:
             return f"{ct.LOGS_FOLDER_PATH}/{plateform}/"
         case 'results':
             return f"{ct.OUTPUT_FOLDER_PATH}/"
+        
+
+def get_destination_path(plateform:str, week_scrap:str, file_name:str) -> object:
+    dest_path = get_path(plateform, "dests")
+    return f"{dest_path}{week_scrap}/{file_name}.json"
+
+
+def get_dest_from_index(dest_path:str, index:int, engine:int=ct.ENGINE) -> list:
+    dest = get_json_file_content(dest_path)
+    return dest[index : index + engine]
+
         
