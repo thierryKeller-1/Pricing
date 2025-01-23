@@ -50,6 +50,7 @@ def generate_url(url:str, nb_page:int=1) -> list:
     """
     show_message('info', 'generating urls', True)
     urls:list = []
+    url = url.split('&page')[0]
     for i in range(1, (nb_page + 1)):
         urls.append(url + f"&page={i}")
     show_message('info', f" {len(urls)} urls generated", True)
@@ -95,14 +96,30 @@ def build_selectors(element:object, selectors:dict) -> dict:
 
 
 def get_page(url:str) -> Driver:
-    driver = Driver()
-    driver.get(url)   
+    try:
+        driver = Driver()
+        driver.get(url)   
+    except TimeoutError:
+        driver.reload()
     driver.short_random_sleep()    
     return driver 
 
-@browser(user_agent=UserAgent.RANDOM, block_images=True, headless=False, parallel=ct.ENGINE)
+@browser(
+        user_agent=UserAgent.RANDOM, 
+        block_images=True, 
+        headless=False, 
+        parallel=ct.ENGINE,
+        add_arguments=[
+            # "--headless", 
+            "--disable-gpu"
+        ]
+        )
 def maeva_initializer_task(driver: Driver, data:list, metadata:dict={}) -> None:
-    driver.get(data)
+    try:
+        driver.get(data)
+    except TimeoutError:
+        time.sleep(5)
+        driver.reload()
     driver.short_random_sleep()
     selectors:dict = fm.get_selectors('maeva', 'initializer')
     try:

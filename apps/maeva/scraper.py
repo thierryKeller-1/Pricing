@@ -159,8 +159,9 @@ class MaevaPageExtractor(object):
 def open_driver(driver: Driver, url:str) -> Driver:
     try:
         driver.get(url, wait=randint(4, 5))
+        driver.short_random_sleep()
         return driver
-    except:
+    except TimeoutError:
         if ip.is_in_rotation():
             while not ip.is_connexion_enabled():
                 driver.sleep(5)
@@ -223,7 +224,6 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
         
         case _:
             show_message('danger', "page type unknown")
-
 
 @browser(user_agent=UserAgent.RANDOM, block_images=True, headless=False)
 def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:

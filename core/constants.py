@@ -15,7 +15,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 G2A_API_TOKEN = os.environ.get('G2A_API_TOKEN')
 G2A_API_URL = os.environ.get('G2A_API_URL')
 DEBUG = os.environ.get('DEBUG')
-ENGINE = 4
+ENGINE = 2
 
 
 #list of developer or user email to notify
