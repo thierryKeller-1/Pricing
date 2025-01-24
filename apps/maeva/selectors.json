@@ -1,4 +1,12 @@
 {
+    "pop-ups": [
+        {
+            "by_tag_only": false,
+            "tag": "button",
+            "attr_key": "id",
+            "attr_value": "didomi-notice-agree-button"
+        }
+    ],
     "initializer": {
         "required_fields": [
             "container",
@@ -6,15 +14,13 @@
             "toast",
             "result_count"
         ],
-        "agreement": [
+        "container": [
             {
                 "by_tag_only": false,
-                "tag": "button",
+                "tag": "div",
                 "attr_key": "id",
-                "attr_value": "didomi-notice-agree-button"
-            }
-        ],
-        "container": [
+                "attr_value": "sl-moteur-resultats-container"
+            },
             {
                 "by_tag_only": false,
                 "tag": "div",
@@ -25,7 +31,7 @@
         "toasts": [
             {
                 "by_tag_only": false,
-                "tag": "div",
+                "tag": "article",
                 "attr_key": "class",
                 "attr_value": "toaster"
             }
@@ -33,34 +39,290 @@
         "toast": [
             {
                 "by_tag_only": false,
-                "tag": "div",
+                "tag": "a",
                 "attr_key": "class",
-                "attr_value": "toaster-residence-libelle",
-                "target": "child",
-                "child":{
-                    "by_tag_only":true,
-                    "tag": "a",
-                    "target": "attribute",
-                    "value_attr": "href"
-                }
+                "attr_value": "toaster-seo-link toaster-annuaire-link",
+                "target": "attribute",
+                "value_attr": "href"
             }
         ],
         "result_count": [
             {
                 "by_tag_only": false,
-                "tag": "div",
-                "attr_key": "id",
-                "attr_value": "sl-resultats-tri",
+                "tag": "h2",
+                "attr_key": "class",
+                "attr_value": "fs-4 bold",
                 "target": "text"
             }
         ]
     },
     "scraper": {
-        "container": {
-            "by_tag_only": false,
-            "tag": "div",
-            "attr_key": "class",
-            "attr_value": "toaster"
+        "required_fields": [
+            "nom", "localite", "station", 
+            "prix_init", "prix_actuel",
+            "typologie", "nom_station",
+            "cle_station"
+        ],
+        "pages": {
+            "nom": [
+                {
+                    "by_tag_only": false,
+                    "tag": "h1",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-residence-libelle",
+                    "target": "text"
+                }
+            ],
+            "typologie": [
+                {
+                    "by_tag_only": false,
+                    "tag": "h2",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-residence-libelle",
+                    "target": "text"
+                }
+            ],
+            "date": [
+                {
+                    "by_tag_only": false,
+                    "tag": "div",
+                    "attr_key": "data-info",
+                    "attr_value": "basket__calendar",
+                    "target": "text"
+                }
+            ],
+            "localite": [
+                {
+                    "by_tag_only": false,
+                    "tag": "button",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-localisation",
+                    "target": "child",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "fs-5",
+                        "target": "text"
+                    }
+                }
+            ],
+            "station": [
+                {
+                    "by_tag_only": false,
+                    "tag": "button",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-localisation",
+                    "target": "child",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "fs-5",
+                        "target": "text"
+                    }
+                }
+            ],
+            "prix_init": [
+                {
+                    "by_tag_only": false,
+                    "tag": "div",
+                    "attr_key": "data-info",
+                    "attr_value": "prix__barre",
+                    "target": "child",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "fiche-produit-prix-barre-item testab-omnibus",
+                        "target": "text"
+                    }
+                }
+            ],
+            "prix_actuel": [
+                {
+                    "by_tag_only": false,
+                    "tag": "div",
+                    "attr_key": "data-info",
+                    "attr_value": "prix__final",
+                    "target": "text"
+                }
+            ],
+            "n_offre": [
+                {
+                    "by_tag_only": false,
+                    "tag": "div",
+                    "attr_key": "class",
+                    "attr_value": "basket__ref flex ai-center mt-1",
+                    "target": "child",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "fs-5",
+                        "target": "text"
+                    }
+                }
+            ]
+        },
+        "others": {
+            "nom": [
+                {
+                    "by_tag_only": false,
+                    "tag": "h1",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-residence-libelle",
+                    "target": "text"
+                }
+            ],
+            "date": [
+                {
+                    "by_tag_only": false,
+                    "tag": "button",
+                    "attr_key": "id",
+                    "attr_value": "basket__calendar",
+                    "target": "text",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "div",
+                        "attr_key": "data-info",
+                        "attr_value": "basket__calendar",
+                        "target": "text"
+                    }
+                }
+            ],
+            "localite": [
+                {
+                    "by_tag_only": false,
+                    "tag": "button",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-localisation",
+                    "target": "child",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "fs-5",
+                        "target": "text"
+                    }
+                }
+            ],
+            "station": [
+                {
+                    "by_tag_only": false,
+                    "tag": "li",
+                    "attr_key": "itemprop",
+                    "attr_value": "itemListElement",
+                    "target": "child",
+                    "multiple": true,
+                    "index": -2,
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "li",
+                        "attr_key": "itemprop",
+                        "attr_value": "itemListElement",
+                        "target": "text",
+                        "multiple": true
+                    }
+                },
+                {
+                    "by_tag_only": false,
+                    "tag": "div",
+                    "attr_key": "itemprop",
+                    "attr_value": "itemListElement",
+                    "target": "child",
+                    "multiple": true,
+                    "index": -2,
+                    "child":{
+                        "by_tag_only": false,
+                        "tag": "a",
+                        "attr_key": "itemprop",
+                        "attr_value": "item",
+                        "target": "text"
+                    }
+                }
+            ],
+            "cle_station":[
+                {
+                    "by_tag_only": false,
+                    "tag": "a",
+                    "attr_key": "itemprop",
+                    "attr_value": "item",
+                    "target": "attribute",
+                    "value_attr": "href",
+                    "multiple": true,
+                    "index": -1
+                },
+                {
+                    "by_tag_only": false,
+                    "tag": "a",
+                    "attr_key": "itemprop",
+                    "attr_value": "item",
+                    "target": "attribute",
+                    "value_attr": "href",
+                    "multiple": true,
+                    "index": -1
+                }
+            ],
+            "container": [
+                {
+                    "by_tag_only": false,
+                    "tag": "section",
+                    "attr_key": "id",
+                    "attr_value": "fiche-seo-produits"
+                }
+            ],
+            "datas": [
+                {
+                    "by_tag_only": false,
+                    "tag": "article",
+                    "attr_key": "class",
+                    "attr_value": "flex-ai-center position-relative"
+                }
+            ],
+            "data": {
+                "typologie": [
+                    {
+                        "by_tag_only": false,
+                        "tag": "h3",
+                        "attr_key": "class",
+                        "attr_value": "toaster-residence-libelle bold",
+                        "target": "text"
+                    }
+                ],
+                "prix_init": [
+                    {
+                        "by_tag_only": false,
+                        "tag": "div",
+                        "attr_key": "class",
+                        "attr_value": "price_item",
+                        "target": "child",
+                        "child": {
+                            "by_tag_only": false,
+                            "tag": "span",
+                            "attr_key": "class",
+                            "attr_value": "price_item_barre",
+                            "target": "text"
+                        }
+                    }
+                ],
+                "prix_actuel": [
+                    {
+                        "by_tag_only": false,
+                        "tag": "div",
+                        "attr_key": "class",
+                        "attr_value": "price_item",
+                        "target": "child",
+                        "child": {
+                            "by_tag_only": false,
+                            "tag": "span",
+                            "attr_key": "class",
+                            "attr_value": "price_item_final",
+                            "target": "text"
+                        }
+                    }
+                ]
+            }
         }
     }
 }

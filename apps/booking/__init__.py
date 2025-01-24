@@ -1,1 +1,1 @@
-from booking.command import booking_initializer, booking_starter
+from apps.booking.command import booking_initializer, booking_starter
