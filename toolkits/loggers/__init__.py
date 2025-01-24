@@ -1,80 +1,37 @@
-# import logging
-# import os
-# import smtplib
-# from colorama import Fore
-# from core import constants as ct
-
-
-# class IgnoreRefusedConnectionFilter(logging.Filter):  
-#     def __init__(self, name = "IgnoreRefusedConnectionFilter"):
-#         super().__init__(name)
-
-#     def filter(self, record):  
-#         return "Connection refused - goodbye" not in record.getMessage()  
-
-
-# logging.basicConfig(encoding='utf-8', level=logging.INFO, format=Fore.GREEN + '%(asctime)s - %(levelname)s - %(message)s', errors="errors")
-
-# logging.Filterer().addFilter(filter=IgnoreRefusedConnectionFilter)  
-
-# def show_message(msg_type:str, message:str, hide_in_prod:bool=False) -> None:
-#     if hide_in_prod and ct.DEBUG == False:
-#         return
-#     match msg_type.lower():
-#         case 'info':
-#             logging.info(Fore.GREEN + message)
-#         case 'debug':
-#             logging.debug(Fore.CYAN + message)
-#         case 'warnning':
-#             logging.warning(Fore.BLUE + message)
-#         case 'error':
-#             logging.error(Fore.RED + message)
-#         case 'critical':
-#             logging.critical(message)
-
-# def get_input(message:str) -> object:
-#     response = input(Fore.GREEN + f"$ {message} ==> ") 
-#     return response
-
-# def report_bug(data:object) -> None:
-#     pass
-
-# def get_log(plateform:str, week_date:str, file_name:str) -> object:
-#     pass
-
-# def report_status():
-#     pass
-
-import logging
 from colorama import Fore
 from core import constants as ct
 
+import datetime  
 
-class IgnoreRefusedConnectionFilter(logging.Filter):
-    """
-    Custom logging filter to exclude unwanted log messages.
-    """
-    def filter(self, record):
-        # Exclude logs containing "Connection refused - goodbye"
-        if "Connection refused - goodbye" in record.getMessage():
-            return False
-        return True
+class Logger(object):  
+    def __init__(self, log_to_file=True, filename='app.log'):  
+        self.log_to_file = log_to_file  
+        self.filename = filename  
 
+    def _get_timestamp(self):  
+        return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')  
 
-# Set up logging configuration
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    encoding='utf-8',
-    errors="ignore"
-)
+    def log(self, message, level='INFO'):  
+        timestamp = self._get_timestamp()  
+        log_message = f"{timestamp} - [{level}] - {message}"  
+        # Print to console  
+        print(log_message)  
 
-# Get the root logger
-logger = logging.getLogger()
+        # Log to file if required  
+        if self.log_to_file:  
+            with open(self.filename, 'a') as f:  
+                f.write(log_message + '\n')  
 
-# Add the custom filter to the logger
-logger.addFilter(IgnoreRefusedConnectionFilter())
+    def info(self, message):  
+        self.log(message, level='INFO')  
 
+    def warning(self, message):  
+        self.log(message, level='WARNING')  
+
+    def error(self, message):  
+        self.log(message, level='ERROR')  
+
+logger = Logger(False)
 
 def show_message(msg_type: str, message: str, hide_in_prod: bool = False) -> None:
     """

@@ -110,12 +110,13 @@ match args.platform:
 
                 for k in range(last_page_index, len(base_urls)):
                     show_message('info', f"{k + 1} / {len(base_urls)}")
+
                     maeva_initializer_task(
                         driver=Driver,
                         data=base_urls[k], 
                         metadata=metadata
                     )
-                    last_page_index += 1
+                    last_page_index += ct.ENGINE
                     logs["last_page"] = last_page_index
                     fm.create_or_update_json_file(log_file, logs)
 

@@ -136,4 +136,7 @@ def get_dest_from_index(dest_path:str, index:int, engine:int=ct.ENGINE) -> list:
     dest = get_json_file_content(dest_path)
     return dest[index : index + engine]
 
+
+def get_item_from_index(object_list:list, index:int, by:int=1) -> list:
+    return object_list[index : index + by]
         
