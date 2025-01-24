@@ -116,7 +116,7 @@ match args.platform:
                         data=base_urls[k], 
                         metadata=metadata
                     )
-                    last_page_index += ct.ENGINE
+                    last_page_index += 1
                     logs["last_page"] = last_page_index
                     fm.create_or_update_json_file(log_file, logs)
 
