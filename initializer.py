@@ -154,12 +154,16 @@ def maeva_initializer_task(driver: Driver, data:list, config:dict=None) -> None:
         print(f" ===> {url}")
         new_driver_instance.get(url, wait=randint(1,4))
         urls = extract(soupify(driver.page_html), valid_selectors)
-        fm.save_data_to_json("urls.json", urls)
+        fm.save_data_to_json(f"urls.json", urls)
         new_driver_instance.delete_cookies_and_local_storage()
 
 
 if __name__ == "__main__":
     data = fm.get_json_file_content("./data.json")
-    maeva_initializer_task(data)
+    print(len(data))
+    maeva_initializer_task(data=[    {
+        "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=435&etendre_min=30&trier_par=zerank",
+        "nb_page": 1
+    },])
 
 
