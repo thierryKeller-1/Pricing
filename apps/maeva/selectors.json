@@ -107,7 +107,23 @@
                     }
                 }
             ],
-            "station": [
+            "nom_station": [
+                {
+                    "by_tag_only": false,
+                    "tag": "button",
+                    "attr_key": "id",
+                    "attr_value": "fiche-produit-localisation",
+                    "target": "child",
+                    "child": {
+                        "by_tag_only": false,
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "fs-5",
+                        "target": "text"
+                    }
+                }
+            ],
+            "cle_station":[
                 {
                     "by_tag_only": false,
                     "tag": "button",
@@ -178,15 +194,15 @@
             "date": [
                 {
                     "by_tag_only": false,
-                    "tag": "button",
+                    "tag": "div",
                     "attr_key": "id",
-                    "attr_value": "basket__calendar",
-                    "target": "text",
+                    "attr_value": "toaster-right-date",
+                    "target": "child",
                     "child": {
                         "by_tag_only": false,
-                        "tag": "div",
-                        "attr_key": "data-info",
-                        "attr_value": "basket__calendar",
+                        "tag": "span",
+                        "attr_key": "class",
+                        "attr_value": "bold",
                         "target": "text"
                     }
                 }
@@ -207,52 +223,18 @@
                     }
                 }
             ],
-            "station": [
-                {
-                    "by_tag_only": false,
-                    "tag": "li",
-                    "attr_key": "itemprop",
-                    "attr_value": "itemListElement",
-                    "target": "child",
-                    "multiple": true,
-                    "index": -2,
-                    "child": {
-                        "by_tag_only": false,
-                        "tag": "li",
-                        "attr_key": "itemprop",
-                        "attr_value": "itemListElement",
-                        "target": "text",
-                        "multiple": true
-                    }
-                },
-                {
-                    "by_tag_only": false,
-                    "tag": "div",
-                    "attr_key": "itemprop",
-                    "attr_value": "itemListElement",
-                    "target": "child",
-                    "multiple": true,
-                    "index": -2,
-                    "child":{
-                        "by_tag_only": false,
-                        "tag": "a",
-                        "attr_key": "itemprop",
-                        "attr_value": "item",
-                        "target": "text"
-                    }
-                }
-            ],
-            "cle_station":[
+            "nom_station": [
                 {
                     "by_tag_only": false,
                     "tag": "a",
                     "attr_key": "itemprop",
                     "attr_value": "item",
-                    "target": "attribute",
-                    "value_attr": "href",
+                    "target": "text",
                     "multiple": true,
                     "index": -1
-                },
+                }
+            ],
+            "cle_station":[
                 {
                     "by_tag_only": false,
                     "tag": "a",

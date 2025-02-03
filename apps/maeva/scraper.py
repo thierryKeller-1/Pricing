@@ -14,12 +14,12 @@ from core import constants as ct
 from toolkits import bs4_extension as bs4_ex
 from toolkits import file_manager as fm
 from toolkits.loggers import show_message
+from toolkits.utils import get_page
 
 
 class MaevaPageExtractor(object):
 
     def __init__(self, config:dict, page_data:dict):
-        print(config.get('date_price'))
         self.config = config
         self.selectors = config.get('selectors')
         self.stations = config.get('stations')
@@ -56,26 +56,29 @@ class MaevaPageExtractor(object):
             end_date = (datetime.strptime(start_date, "%d/%m/%Y") + timedelta(days=6)).strftime("%d/%m/%Y")
             return {"date_debut": start_date, "date_fin": end_date}
         else:
+            print(date)
             date = date.lower().split(' au ')
-            start_date = date[0].split(' ')
-            start_date = f"{start_date[0]}/{ct.MONTH_FR_DICT.get(start_date[1][:3])}/{datetime.now().year}"
+            start_date = date[0].replace('du ', '').split(' ')
+            month = ct.MONTH_FR_DICT.get(start_date[1][:3]) if 'juin' not in start_date[1].lower() else ct.MONTH_FR_DICT.get('jun')
+            start_date = f"{start_date[0]}/{month}/{datetime.now().year}"
             try:
                 datetime.strptime(start_date, "%d/%m/%Y")
             except Exception as e:
-                print('datetime format invalid')
+                print(f'datetime format invalid {date}')
             end_date = (datetime.strptime(start_date, "%d/%m/%Y") + timedelta(days=6)).strftime("%d/%m/%Y")
             return {"date_debut": start_date, "date_fin": end_date}
 
-    def clean_station(self, station:str) -> dict | None:
-        return {"nom_station": station}
+    def clean_nom_station(self, nom_station:str) -> dict | None:
+        return {"nom_station": nom_station}
     
     def clean_cle_station(self, cle_station:str) -> dict | None:
-        # print(f"cle_station: {cle_station}")
-        station_key = cle_station.split(',')[1].replace('.html', '')
-        return {"cle_station": station_key}
-        # if not station_key:
-        #     station_key = self.stations[station_name.upper()] if station_name.upper() in self.stations.keys() else ''
-        #     print(f"\t===> {station_name} =>  {station_key}")
+        print(f"cle_station: {cle_station}")
+        if self.page_type == 'others':
+            station_key = cle_station.split(',')[1].replace('.html', '')
+            return {"cle_station": station_key}
+        else:
+            station_key = self.stations[cle_station.upper()] if cle_station.upper() in self.stations.keys() else ''
+            return {"cle_station": station_key}
 
     def clean_localite(self, locality:str) -> None:
         if locality != "" and locality is not None:
@@ -96,6 +99,7 @@ class MaevaPageExtractor(object):
     
     def clean_prix_actuel(self, prix:str) -> dict | None:
         if prix:
+            print(prix)
             prix = prix.split('€')[0].replace(',', '.')
             return {"prix_actuel": prix}
         return None
@@ -118,7 +122,7 @@ class MaevaPageExtractor(object):
                 data_source = {}
 
                 for key in list(self.selectors.keys()):
-                    show_message('info', f"{key}", True)
+                    print(key)
                     data_source[key] = bs4_ex.extract_element_by_locator(self.page_data.get('web_page'), self.selectors.get(key))
                 data_source['cle_station'] = bs4_ex.extract_element_by_locator(self.page_data.get('web_page'), cle_station)
                 
@@ -133,18 +137,23 @@ class MaevaPageExtractor(object):
                     self.uncleaned_datas.append(new_data_source)
 
     def normalize_data(self) -> list:
+        print("normalizing data")
         for uncleaned_data in self.uncleaned_datas:
             clean_data = {}
             for item in list(uncleaned_data.keys()):
-                # print(item)
+                print(item)
                 clean_func = getattr(self, f"clean_{item}")
-                new_value = clean_func(uncleaned_data.get(item))
+                new_value = ""
+                if clean_func == "clean_cle_station" and self.page_type == "pages":
+                    new_value = clean_func(clean_data["nom_station"])
+                else:
+                    new_value = clean_func(uncleaned_data.get(item))
+
                 if bool(new_value):
                     for key in list(new_value.keys()):
                         clean_data[key] =  new_value[key]
 
-            # clean_data["station_key"] = ""
-            clean_data["date_price"] = self.config.get('date_price')
+            clean_data["date_price"] = self.config.get('week_scrap')
             clean_data["date_debut-jour"] = ""
             clean_data["Nb semaines"] = datetime.strptime(
                         clean_data["date_debut"], '%d/%m/%Y').isocalendar()[1]
@@ -152,13 +161,14 @@ class MaevaPageExtractor(object):
             if clean_data.get('prix_init', 0) == 0: 
                 clean_data['prix_init'] = clean_data['prix_actuel']
             self.cleaned_datas.append(clean_data)
-
-        print(self.cleaned_datas)
     
+    def save_data(self) -> None:
+        show_message("info", f"saving {len(self.cleaned_datas)} new data")
+        fm.save_data_to_csv(self.config.get("ouput_file"), ct.MAEVA_FIELDS, self.cleaned_datas)
 
 def open_driver(driver: Driver, url:str) -> Driver:
     try:
-        driver.get(url, wait=randint(4, 5))
+        driver.get(url)
         driver.short_random_sleep()
         return driver
     except TimeoutError:
@@ -180,11 +190,13 @@ def get_page_type(url:str) -> str:
     return 'others'
 
 def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
+    show_message('info', "building selectors")
+    print(selectors)
     new_selectors = {}
     new_selectors['page_type'] = page_type
-    new_selectors['required_fields'] = selectors['required_fields']
+    new_selectors['required_fields'] = selectors.get('required_fields')
     selectors = selectors.get(page_type)
-    show_message('info', "building selectors")
+
     match page_type:
         case "pages":
             for item in list(selectors.keys()):
@@ -193,7 +205,7 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
                     if bs4_ex.check_element_by_locator(page_source, item_content):
                         new_selectors[item] = item_content
                         break
-            return new_selectors
+                return new_selectors
         case "others":
             for item in list(selectors.keys()):
                 if item == 'data':
@@ -207,7 +219,6 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
                                 break
 
                 elif item == 'cle_station':
-                    print('cle_station')
                     for item_content in selectors.get(item):
                         if bs4_ex.check_all_element_by_locator(page_source, item_content):
                             new_selectors[item] = item_content
@@ -219,7 +230,7 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
                             new_selectors[item] = item_content
                             break
             show_message('info', f"new selectors build", True)
-            show_message('info', f"{new_selectors}")
+            show_message('info', f" new {new_selectors}")
             return new_selectors
         
         case _:
@@ -227,30 +238,36 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
 
 @browser(user_agent=UserAgent.RANDOM, block_images=True, headless=False)
 def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
-    print(f"config : {metadata}")
-    stations = load_maeva_station_list()
+    show_message("info", f"{data}")
     try:
-        open_driver_instance = open_driver(driver, data['url'])
+        open_driver_instance = get_page(data)
     except:
-        open_driver_instance = open_driver(driver, data['url'])
-    page_type = get_page_type(data['url'])
-    selectors:dict = fm.get_selectors('maeva')
+        open_driver_instance = get_page(data)
+    page_type = get_page_type(data)
+
+    selectors:dict = fm.get_selectors('maeva', 'scraper')
+
     try:
         accept_btn = open_driver_instance.select(bs4_ex.create_selector(fm.get_selectors('maeva', 'pop-ups')[0]))
         accept_btn.click()
         show_message('info', "accept button clicked", True)
     except:
         pass
+
     soupe = soupify(open_driver_instance.page_html)
     valid_selectors:dict = build_selector(page_type, soupe, selectors)
-    show_message('info', f"{valid_selectors}", True)
+    show_message('info', f"valid selectors {valid_selectors}", True)
     metadata["selectors"] = valid_selectors
-    metadata["stations"] = stations
-    metadata["date_price"] = "30/12/2024"
     print('extraction')
-    m = MaevaPageExtractor(
-            config=metadata,
-            page_data = {"web_page": soupe, "page_type": page_type, "url":driver.current_url}
-        )
-    m.extract()
-    m.normalize_data()
+
+    try:
+        m = MaevaPageExtractor(
+                config=metadata,
+                page_data = {"web_page": soupe, "page_type": page_type, "url":driver.current_url}
+            )
+        m.extract()
+        m.normalize_data()
+        m.save_data()
+    except Exception as e:
+        print(e)
+        pass

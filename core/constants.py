@@ -27,7 +27,7 @@ USER_EMAIL_TO_NOTIFY = [
     "test@gmail.com",
 ]
 
-# booking csv fields
+# Maeva csv fields
 BOOKING_FIELDS = [
             'web-scraper-order',
             'date_price',
@@ -43,21 +43,38 @@ BOOKING_FIELDS = [
             'Nb semaines'
         ]
 
+# Maeva csv fields
+MAEVA_FIELDS = [
+    "web-scrapper-order",
+    "date_price",
+    "date_debut",
+    "date_fin",
+    "prix_init",
+    "prix_actuel",
+    "typologie",
+    "n_offre",
+    "nom",
+    "localite",
+    "date_debut-jour",
+    "Nb semaines",
+    "cle_station",
+    "nom_station"
+]
 
 # transformation variables
 MONTH_FR_DICT = {  
-            "jan": "01",  
-            "feb": "02",  
-            "mar": "03",  
-            "apr": "04",  
-            "may": "05",  
-            "jun": "06",  
-            "jul": "07",  
-            "aug": "08",  
-            "sep": "09",  
-            "oct": "10",  
-            "nov": "11",  
-            "dec": "12"  
+        'jan': '01',
+        'fév': '02',
+        'mar': '03',
+        'avr': '04',
+        'mai': '05',
+        'jun': '06',
+        'jui': '07',
+        'aoû': '08',
+        'sep': '09',
+        'oct': '10',
+        'nov': '11',
+        'déc': '12' 
         }  
 
 # date format in file

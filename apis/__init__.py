@@ -273,7 +273,7 @@ class CSVUploader(object):
 
 def load_maeva_station_list() -> dict:
     """ function to load maeva stations from API """
-    show_message('info', "Initialisation liste stations ...", True)
+    show_message('info', "loading maeva stations list from API ...", True)
     g2a_instance = G2A_API(entity="regions")
     page = 1
     stations = {}
