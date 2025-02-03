@@ -9,7 +9,7 @@ class Logger(object):
         self.filename = filename  
 
     def _get_timestamp(self):  
-        return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')  
+        return datetime.datetime.now().strftime('%d:%m:%Y - %H:%M:%S')  
 
     def log(self, message, level='INFO'):  
         timestamp = self._get_timestamp()  

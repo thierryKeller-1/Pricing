@@ -56,6 +56,10 @@ def create_or_update_json_file(file_path:str, file_content:object=[]) -> None:
             openfile.write(json.dumps(file_content))
     show_message('info', "file data updated")
 
+def create_csv_file(file_path:str, fields_name:list) -> None:
+    import pandas as pd
+    pd.DataFrame(columns=fields_name).to_csv(file_path, index=False)
+
 def save_data_to_csv(file_path:str, field_names:str, data:list=[]) -> None:
     """save data to csv file
     Args:
@@ -129,7 +133,7 @@ def get_path(plateform:str, folder_name:str) -> str | None:
 
 def get_destination_path(plateform:str, week_scrap:str, file_name:str) -> object:
     dest_path = get_path(plateform, "dests")
-    return f"{dest_path}{week_scrap}/{file_name}.json"
+    return f"{dest_path}scraps/{week_scrap}/{file_name}.json"
 
 
 def get_dest_from_index(dest_path:str, index:int, engine:int=ct.ENGINE) -> list:

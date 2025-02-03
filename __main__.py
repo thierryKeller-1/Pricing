@@ -67,7 +67,7 @@ match args.platform:
             base_output = []
 
             log_file_path = fm.get_path("maeva", "logs") + f"init/{metadata.get('week_scrap').replace('/',  '_')}/"
-            output_file_path = fm.get_path("maeva", "dests") + f"initialization/{metadata.get('week_scrap').replace('/',  '_')}/"
+            output_file_path = fm.get_path("maeva", "dests") + f"init/{metadata.get('week_scrap').replace('/',  '_')}/"
 
             fm.create_folder_if_not_exist(log_file_path)
             fm.create_folder_if_not_exist(output_file_path)
@@ -140,12 +140,11 @@ match args.platform:
             base_log:dict = metadata
             base_log["last_index"] = 0
             base_log["finished"] = False
-            # base_log["last_page"] = 0
             base_output:list = []
 
-            log_file_path:str = fm.get_path("maeva", "logs") + f"scrap/{metadata.get('week_scrap').replace('/',  '_')}/"
-            output_file_path:str = fm.get_path("maeva", "results") + f"scrap/{metadata.get('week_scrap').replace('/',  '_')}/"
-            dest_file_path:str = fm.get_destination_path("maeva", args.wee_scrap.replace('/', '_'), args.name)
+            log_file_path:str = fm.get_path("maeva", "logs") + f"scraps/{metadata.get('week_scrap').replace('/',  '_')}/"
+            output_file_path:str = fm.get_path("maeva", "results") + f"scraps/{metadata.get('week_scrap').replace('/',  '_')}/"
+            dest_file_path:str = fm.get_destination_path("maeva", args.week_scrap.replace('/', '_'), args.name)
 
             fm.create_folder_if_not_exist(log_file_path)
             fm.create_folder_if_not_exist(output_file_path)
@@ -157,27 +156,40 @@ match args.platform:
                 fm.create_or_update_json_file(log_file, base_log)
 
             if not fm.is_file_exist(output_file):
-                fm.save_data_to_csv(output_file, base_output)
+                fm.create_csv_file(output_file, ct.MAEVA_FIELDS)
 
             metadata["ouput_file"] = output_file
 
             logs = fm.get_json_file_content(log_file)
             show_message('info',f"logs {logs}")
+            show_message('info',f"logs {dest_file_path}")
+
             
             metadata["stations"] = load_maeva_station_list()
-            base_selectors:dict = fm.get_selectors('maeva', 'scraper')
             dest_count:int = len(fm.get_json_file_content(dest_file_path))
 
             while not logs["finished"]:
                 if logs["last_index"] > dest_count:
                     # show scrap status here
                     show_message("info", "scraping finished")
+                    logs["finished"] = True
+                    fm.create_or_update_json_file(log_file, logs)
                     break
 
                 new_dest:list = fm.get_dest_from_index(dest_file_path, logs['last_index'])
 
+                # try:
+                maeva_scraper_task(
+                    driver=Driver,
+                    data=new_dest,
+                    metadata=metadata
+                )
+                # except Exception as e:
+                #     print(e)
+                #     pass
 
-
+                logs["last_index"] = logs["last_index"] + 1
+                fm.create_or_update_json_file(log_file, logs)
 
 
 

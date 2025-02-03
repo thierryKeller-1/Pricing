@@ -86,7 +86,6 @@ def extract_element_by_locator(element:object, locator:dict) -> object | None:
     Returns:
         object | None: element data
     """
-    show_message('info', "extracting element by locator", True)
     def clean_text(source:str) -> str:
         """remove encoding in text
         Args:
@@ -101,6 +100,8 @@ def extract_element_by_locator(element:object, locator:dict) -> object | None:
         show_message('info', text, True)
         return text
     
+    
+    print(f"extracting element by locator {locator}")
     element_value = ""
     if locator.get('multiple', False):
         elements = get_all_element_by_locator(element, locator)
@@ -117,7 +118,7 @@ def extract_element_by_locator(element:object, locator:dict) -> object | None:
             case "child":
                 sub_element = ''
                 if locator['child']['by_tag_only']:
-                    sub_element = element_value.find(locator['child']['tag'], href=True if locator['child']['target'] == 'href' else False)
+                    sub_element = element_value.find(locator['child']['tag'], href=True if locator['child']['value_attr'] == 'href' else False)
                 else:
                     sub_element = element_value.find(locator['child']['tag'], {locator['child']['attr_key']:locator['child']['attr_value']}, href=True if locator['child']['target'] == 'href' else False)
                 if locator['child']['target'] == 'attribute':

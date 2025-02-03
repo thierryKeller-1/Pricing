@@ -1,0 +1,3 @@
+- load maeva station from file if API not ready
+- selector builder validation
+- add from index to final index

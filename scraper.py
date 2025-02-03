@@ -72,12 +72,11 @@ class MaevaPageExtractor(object):
         return {"nom_station": station}
     
     def clean_cle_station(self, cle_station:str) -> dict | None:
-        # print(f"cle_station: {cle_station}")
-        station_key = cle_station.split(',')[1].replace('.html', '')
+        if self.page_type == 'others':
+            station_key = cle_station.split(',')[1].replace('.html', '')
+            return {"cle_station": station_key}
+        station_key = self.stations[cle_station.upper()] if cle_station.upper() in self.stations.keys() else ''
         return {"cle_station": station_key}
-        # if not station_key:
-        #     station_key = self.stations[station_name.upper()] if station_name.upper() in self.stations.keys() else ''
-        #     print(f"\t===> {station_name} =>  {station_key}")
 
     def clean_localite(self, locality:str) -> None:
         if locality != "" and locality is not None:
@@ -265,6 +264,7 @@ def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
         )
     m.extract()
     m.normalize_data()
+    fm.save_data_to_csv("demo.csv", ct.MAEVA_FIELDS)
 
 
 
@@ -281,13 +281,16 @@ if __name__ == "__main__":
     # )
     maeva_scraper_task(
         driver=Driver,
-        data=[ {
-            "url": "https://www.maeva.com/fr-fr/quartier-creve-coeur-maeva-home_57453.html?date_debut=2025-01-18&date_fin=2025-01-24&residence_cle=57453&formule=0&nbPax=0&ordreSeo=ranking",
+        data=[ 
+            {
+            "url": "https://maeva.com/fr-fr/residence-les-yoles_566564.html?date_debut=2025-04-26&date_fin=2025-05-02&residence_cle=566564&formule=0&ordreSeo=prixAsc",
             "nb_page": 1
         },
-                    {
-            "url": "https://www.maeva.com/fr-fr/pages/fiche.php?id=773894",
-            }],
+            #         {
+            # "url": "https://www.maeva.com/fr-fr/pages/fiche.php?id=773894&date_debut=2025-03-08&date_fin=2025-03-14",
+            # }
+            
+            ],
         metadata={'date_price':'30/12/2024'}
     )
 
