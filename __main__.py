@@ -30,6 +30,7 @@ def main_arguments() -> object:
     parser.add_argument('--action', '-a', dest='action', help="""TAction to do: \n \t 'init': initialize destination's urls. | 'start': Launch scraps. | 'clean': clean scrapped datas""")
     parser.add_argument('--week_scrap', '-w', dest='week_scrap', default=get_monday(), help="Monday date of the week to scrap 'dd/mm/YYYY'")
     parser.add_argument('--name', '-n', dest='name', help="name to be used for this instance like output file name")
+    parser.add_argument('--station_file_name', '-s', dest='station_name', help="filename contains station urls")
     # parser.add_argument('--engine', '-e', default=ct.ENGINE, dest='engine', help="number of engine to launch")
     
     return parser.parse_args()
@@ -57,9 +58,6 @@ match args.platform:
             metadata["config_name"] = args.name
             show_message('info', "initialization")
             data = []
-            data = fm.get_stations("maeva")
-
-            show_message("info", f"{len(data)} stations url loaded")
 
             base_log = metadata
             base_log["last_index"] = 0
@@ -86,7 +84,10 @@ match args.platform:
             logs = fm.get_json_file_content(log_file)
             show_message('info',f"logs {logs}")
             
-            stations_base = fm.get_stations("maeva")
+            stations_base = fm.get_stations(plateform="maeva", filename=args.station_name)
+            show_message("info", f"{len(data)} stations url loaded")
+
+
             base_selectors:dict = fm.get_selectors('maeva', 'initializer')
             result_count_selector = base_selectors.get("result_count")
 
@@ -134,9 +135,6 @@ match args.platform:
             metadata["config_name"] = args.name
             show_message('info', "scraping...")
             data = []
-
-            show_message("info", f"{len(data)} destination url loaded")
-
             base_log:dict = metadata
             base_log["last_index"] = 0
             base_log["finished"] = False
@@ -178,15 +176,15 @@ match args.platform:
 
                 new_dest:list = fm.get_dest_from_index(dest_file_path, logs['last_index'])
 
-                # try:
-                maeva_scraper_task(
-                    driver=Driver,
-                    data=new_dest,
-                    metadata=metadata
-                )
-                # except Exception as e:
-                #     print(e)
-                #     pass
+                try:
+                    maeva_scraper_task(
+                        driver=Driver,
+                        data=new_dest,
+                        metadata=metadata
+                    )
+                except Exception as e:
+                    print(e)
+                    pass
 
                 logs["last_index"] = logs["last_index"] + 1
                 fm.create_or_update_json_file(log_file, logs)

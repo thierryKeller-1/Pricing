@@ -136,6 +136,9 @@ class MaevaPageExtractor(object):
                         new_data_source[content_key] = bs4_ex.extract_element_by_locator(data_el, data.get(content_key))
                     self.uncleaned_datas.append(new_data_source)
 
+    def validate_data(self, data:dict) -> bool:
+        return True
+
     def normalize_data(self) -> list:
         print("normalizing data")
         for uncleaned_data in self.uncleaned_datas:
@@ -190,6 +193,12 @@ def get_page_type(url:str) -> str:
     return 'others'
 
 def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
+    def is_selector_valid(selectors:dict, required_fields:list) -> dict:
+        for selector in required_fields:
+            if not selector.get(selector, False):
+                return False
+            return True
+                
     show_message('info', "building selectors")
     print(selectors)
     new_selectors = {}
@@ -229,6 +238,7 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
                         if bs4_ex.check_element_by_locator(page_source, item_content):
                             new_selectors[item] = item_content
                             break
+
             show_message('info', f"new selectors build", True)
             show_message('info', f" new {new_selectors}")
             return new_selectors
@@ -236,7 +246,7 @@ def build_selector(page_type:str, page_source:str, selectors:dict) -> dict:
         case _:
             show_message('danger', "page type unknown")
 
-@browser(user_agent=UserAgent.RANDOM, block_images=True, headless=False)
+@browser(user_agent=UserAgent.RANDOM, block_images=True, headless=True)
 def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
     show_message("info", f"{data}")
     try:
@@ -248,9 +258,10 @@ def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
     selectors:dict = fm.get_selectors('maeva', 'scraper')
 
     try:
-        accept_btn = open_driver_instance.select(bs4_ex.create_selector(fm.get_selectors('maeva', 'pop-ups')[0]))
-        accept_btn.click()
-        show_message('info', "accept button clicked", True)
+        for pop_up in fm.get_selectors("maeva", "pop-ups"):
+            accept_btn = open_driver_instance.select(bs4_ex.create_selector(pop_up))
+            accept_btn.click()
+            show_message('info', "accept button clicked", True)
     except:
         pass
 
@@ -268,6 +279,8 @@ def maeva_scraper_task(driver: Driver, data:list, metadata:dict) -> None:
         m.extract()
         m.normalize_data()
         m.save_data()
+        
+        driver.close()
     except Exception as e:
         print(e)
         pass

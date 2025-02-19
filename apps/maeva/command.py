@@ -67,5 +67,5 @@ def maeva_initializer(weekscrap:str) -> None:
         sys.exit()
 
 
-def maeva_starter(weekscrap:str, name:str) -> None:
+def maeva_setups(weekscrap:str, name:str) -> None:
     pass

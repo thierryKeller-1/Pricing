@@ -110,11 +110,11 @@ def get_selectors(plateform:str, key:str=None) -> object:
     check_plateform(plateform)
     return get_json_file_content(f"{ct.APPS_FOLDER_PATH}/apps/{plateform}/selectors.json", key=key)
     
-def get_stations(plateform:str, key:str=None) -> object:
+def get_stations(plateform:str,filename:str, key:str=None) -> object:
     check_plateform(plateform)
     if key:
-        return get_json_file_content(f"{ct.APPS_FOLDER_PATH}/configs/{plateform}/stations.json", key)
-    return get_json_file_content(f"{ct.APPS_FOLDER_PATH}/configs/{plateform}/stations.json")
+        return get_json_file_content(f"{ct.APPS_FOLDER_PATH}/configs/{plateform}/{filename}.json", key)
+    return get_json_file_content(f"{ct.APPS_FOLDER_PATH}/configs/{plateform}/{filename}.json")
 
 def get_path(plateform:str, folder_name:str) -> str | None:
     check_plateform(plateform)
@@ -144,3 +144,17 @@ def get_dest_from_index(dest_path:str, index:int, engine:int=ct.ENGINE) -> list:
 def get_item_from_index(object_list:list, index:int, by:int=1) -> list:
     return object_list[index : index + by]
         
+
+def combine_file_content(file_path:str, file_type:str) -> list:
+    match file_type:
+        case 'json':
+            files = os.listdir(file_path)
+            for file in files:
+                file_contents = []
+                file_content = get_json_file_content(file)
+                file_contents.append(file_content)
+            return file_contents
+        case 'csv':
+            pass
+      
+    

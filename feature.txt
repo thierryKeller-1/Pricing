@@ -1,3 +1,6 @@
+- creation de programme filtre des urls et normalisation des parametres
+- detection de type de page  
+- generation de selecteur
 - load maeva station from file if API not ready
 - selector builder validation
 - add from index to final index

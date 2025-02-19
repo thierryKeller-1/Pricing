@@ -5,6 +5,12 @@
             "tag": "button",
             "attr_key": "id",
             "attr_value": "didomi-notice-agree-button"
+        },
+        {
+            "by_tag_only": false,
+            "tag": "button",
+            "attr_key": "class",
+            "attr_value": "popin_close_btn popin_desktop_close_btn"
         }
     ],
     "initializer": {
@@ -58,8 +64,7 @@
     },
     "scraper": {
         "required_fields": [
-            "nom", "localite", "station", 
-            "prix_init", "prix_actuel",
+            "nom", "localite", "station", "prix_actuel",
             "typologie", "nom_station",
             "cle_station"
         ],

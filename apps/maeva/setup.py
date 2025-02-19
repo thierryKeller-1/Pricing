@@ -1,8 +1,9 @@
 import sys
-
+import os
 from datetime import datetime
 from colorama import Fore
 
+from toolkits.loggers import show_message
 from toolkits import file_manager as fm, loggers
 from core import constants as ct
 
@@ -19,6 +20,10 @@ def maeva_intial_setup() -> None:
         "last_index": 0,
         "end_at": "",
     }
+
+    sources = fm.get_path("maeva", "dests") + "setups/sources/"
+    sources_dests = fm.combine_file_content(sources, 'json')
+    show_message('info', f"{len(sources_dests)} sources loaded")
 
     # config_name
     while True:
@@ -97,6 +102,15 @@ def maeva_intial_setup() -> None:
             break
         except:
             loggers.show_message('error',"end index invalid")
+
+        #number of config files
+    while True:
+        loggers.show_message('info',"number of config files")
+        number:str = loggers.get_input('numbers')
+        if number and number.isnumeric():
+            
+            break
+        loggers.show_message('error',"config_name invalid")
 
     loggers.show_message('info',f"config will be \n\t{config}")
     response:str = loggers.get_input("yes or no")

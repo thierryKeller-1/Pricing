@@ -1,13 +1,16 @@
 from botasaurus.browser import Driver, browser, Wait
 
 def get_page(url:str) -> Driver:
-    try:
-        driver = Driver()
-        driver.get(url)   
-    except TimeoutError:
-        driver.reload()
-    driver.short_random_sleep()    
-    return driver 
+    page_loaded = False
+    while not page_loaded:
+        try:
+            driver = Driver()
+            driver.get(url)   
+            page_loaded = True
+        except TimeoutError:
+            driver.reload()
+        driver.short_random_sleep()    
+        return driver 
 
 
 def split_data(data_to_split:list, by:int) -> list:

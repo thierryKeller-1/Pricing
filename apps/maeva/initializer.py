@@ -111,7 +111,8 @@ def get_page(url:str) -> Driver:
         parallel=ct.ENGINE,
         add_arguments=[
             # "--headless", 
-            "--disable-gpu"
+            "--disable-gpu",
+            "--start-maximized"
         ]
         )
 def maeva_initializer_task(driver: Driver, data:list, metadata:dict={}) -> None:
@@ -136,31 +137,5 @@ def maeva_initializer_task(driver: Driver, data:list, metadata:dict={}) -> None:
     
     time.sleep(randint(2, 3))
 
-
-
-# if __name__ == "__main__":
-    # data = [
-    # {
-    #     "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=29994&etendre_min=30&trier_par=zerank",
-    #     "nb_page": 1
-    # },
-    # {
-    #     "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=109&etendre_min=30&trier_par=zerank",
-    #     "nb_page": 1
-    # },
-    # {
-    #     "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=304&etendre_min=30&trier_par=zerank",
-    #     "nb_page": 1
-    # },
-    # {
-    #     "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=39&etendre_min=30&trier_par=zerank",
-    #     "nb_page": 1
-    # },
-    # {
-    #     "url": "https://www.maeva.com/fr-fr/searchlist.php?map=1&acces_direct=1&station_cle=297&etendre_min=30&trier_par=zerank",
-    #     "nb_page": 1
-    # }
-    # ]
-#     maeva_initializer_task(data)
 
 
