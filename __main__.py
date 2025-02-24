@@ -129,6 +129,9 @@ match args.platform:
         if args.action == 'setup':
             maeva_intial_setup()
 
+        if args.action == 'configure':
+            pass
+
         if args.action == 'scrap':
             metadata = {}
             metadata["week_scrap"] = args.week_scrap
