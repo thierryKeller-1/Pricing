@@ -4,3 +4,7 @@
 - load maeva station from file if API not ready
 - selector builder validation
 - add from index to final index
+
+
+
+python3 Pricing/ -p maeva -a init -s stations -n all_station -w "24/02/2025"
