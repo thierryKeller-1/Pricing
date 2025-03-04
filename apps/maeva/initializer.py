@@ -29,9 +29,12 @@ def extract(page_data:str, selectors:dict) -> list:
     container = bs4_ex.get_element_by_locator(page_data, selectors.get('container'))
     show_message('info', 'container found', True)
     if container:
-        toasts = bs4_ex.get_all_element_by_locator(container, selectors['toasts'])
-        show_message('info', f"{len(toasts)} cards found")
-        if toasts:
+        try:
+            toasts = bs4_ex.get_all_element_by_locator(container, selectors['toasts'])
+            show_message('info', f"{len(toasts)} cards found")
+        except:
+            pass
+        if bool(toasts):
             for toast in toasts:
                 url = bs4_ex.extract_element_by_locator(toast, selectors['toast'])
                 if url:
@@ -98,7 +101,8 @@ def build_selectors(element:object, selectors:dict) -> dict:
 def get_page(url:str) -> Driver:
     try:
         driver = Driver()
-        driver.get(url)   
+        driver.get(url)  
+        driver.short_random_sleep() 
     except TimeoutError:
         driver.reload()
     driver.short_random_sleep()    
